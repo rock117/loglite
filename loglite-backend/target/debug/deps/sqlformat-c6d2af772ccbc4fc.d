@@ -1,0 +1,10 @@
+C:\rock\coding\code\my\rust\MyIdeas\loglite-backend\target\debug\deps\sqlformat-c6d2af772ccbc4fc.d: C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\lib.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\formatter.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\indentation.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\inline_block.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\params.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\tokenizer.rs
+
+C:\rock\coding\code\my\rust\MyIdeas\loglite-backend\target\debug\deps\libsqlformat-c6d2af772ccbc4fc.rmeta: C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\lib.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\formatter.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\indentation.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\inline_block.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\params.rs C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\tokenizer.rs
+
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\lib.rs:
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\formatter.rs:
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\indentation.rs:
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\inline_block.rs:
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\params.rs:
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlformat-0.2.6\src\tokenizer.rs:

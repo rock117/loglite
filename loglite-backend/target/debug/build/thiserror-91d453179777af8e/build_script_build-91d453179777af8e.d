@@ -1,0 +1,5 @@
+C:\rock\coding\code\my\rust\MyIdeas\loglite-backend\target\debug\build\thiserror-91d453179777af8e\build_script_build-91d453179777af8e.d: C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\thiserror-1.0.69\build.rs
+
+C:\rock\coding\code\my\rust\MyIdeas\loglite-backend\target\debug\build\thiserror-91d453179777af8e\build_script_build-91d453179777af8e.exe: C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\thiserror-1.0.69\build.rs
+
+C:\Users\zk187\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\thiserror-1.0.69\build.rs:

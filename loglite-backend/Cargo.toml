@@ -1,0 +1,27 @@
+[package]
+name = "loglite-backend"
+version = "0.1.0"
+edition = "2021"
+authors = ["Loglite"]
+
+[dependencies]
+rocket = { version = "0.5.0-rc.4", features = ["json"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+anyhow = "1"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde", "clock"] }
+tantivy = "0.22"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+sea-orm = { version = "0.12", features = ["sqlx-postgres", "macros", "runtime-tokio-rustls", "with-json", "with-uuid", "with-chrono"] }
+futures = "0.3"
+parking_lot = "0.12"
+serde_repr = "0.1"
+time = { version = "0.3", features = ["macros", "serde"] }
+rocket_cors = "0.6"
+
+[build-dependencies]
+tantivy = "0.22"
