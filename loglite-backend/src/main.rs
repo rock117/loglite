@@ -15,8 +15,8 @@ mod utils;
 
 use db::init_db;
 use handlers::{
-    create_app, health_handler, ingest_handler, ingest_nginx, list_apps, search_handler_fn,
-    ttl_cleanup_loop,
+    create_app, health_handler, ingest_auto, ingest_go, ingest_handler, ingest_java, ingest_nginx,
+    ingest_rust, list_apps, search_handler_fn, ttl_cleanup_loop,
 };
 use id_gen::Snowflake;
 use search_engine::init_search;
@@ -65,6 +65,10 @@ async fn main() -> Result<(), rocket::Error> {
                 list_apps,
                 ingest_handler,
                 ingest_nginx,
+                ingest_java,
+                ingest_rust,
+                ingest_go,
+                ingest_auto,
                 search_handler_fn
             ],
         )

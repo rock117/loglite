@@ -13,6 +13,8 @@ A lightweight, high-performance log ingestion and search system inspired by Splu
 - ✅ Full-text search with Tantivy
 - ✅ TTL-based log retention and cleanup
 - ✅ Basic ingestion and search APIs
+- ✅ **Multi-language log parsing (Java, Rust, Go) with auto-detection**
+- ✅ **Multi-line log merging (exception stack traces)**
 - 🚧 File/directory tail ingestion with offset persistence
 - 🚧 Frontend UI (Vue3)
 - ⏳ Per-app source configuration (include/exclude patterns, recursive scanning)
@@ -56,7 +58,12 @@ Loglite provides a simplified alternative to enterprise log management systems, 
 │                    Backend (Rocket API)                      │
 ├─────────────────────────────────────────────────────────────┤
 │  • /api/apps          - App management                       │
-│  • /api/ingest        - Event ingestion                      │
+│  • /api/ingest        - Generic JSON ingestion               │
+│  • /api/ingest/java   - Java log parsing                     │
+│  • /api/ingest/rust   - Rust log parsing                     │
+│  • /api/ingest/go     - Go log parsing                       │
+│  • /api/ingest/auto   - Auto-detect format                   │
+│  • /api/ingest/nginx  - Nginx access logs                    │
 │  • /api/search        - Full-text search                     │
 │  • /api/health        - Health check                         │
 └──────────────┬──────────────────────────┬───────────────────┘
@@ -174,7 +181,7 @@ curl -X POST http://localhost:8000/api/apps \
   -d '{"name": "order-service"}'
 ```
 
-### Ingest Events
+### Ingest Events (Generic JSON)
 ```bash
 curl -X POST http://localhost:8000/api/ingest \
   -H "Content-Type: application/json" \
@@ -200,6 +207,42 @@ curl -X POST http://localhost:8000/api/search \
     "q": "error",
     "limit": 100
   }'
+```
+
+### Ingest Java Logs (with Stack Traces)
+```bash
+curl -X POST http://localhost:8000/api/ingest/java \
+  -H "Content-Type: text/plain" \
+  -d "2024-02-09 22:30:15.123 ERROR [main] com.example.App - Connection failed
+java.lang.NullPointerException: Cannot invoke method
+    at com.example.Service.process(Service.java:42)
+    at com.example.App.main(App.java:15)
+2024-02-09 22:30:16.456 INFO [worker-1] com.example.Service - Processing request"
+```
+
+### Ingest Rust Logs
+```bash
+curl -X POST http://localhost:8000/api/ingest/rust \
+  -H "Content-Type: text/plain" \
+  -d "[2024-02-09T14:30:15Z ERROR my_app] Database connection lost
+[2024-02-09T14:30:16Z INFO  my_app::handler] Request completed"
+```
+
+### Ingest Go Logs
+```bash
+curl -X POST http://localhost:8000/api/ingest/go \
+  -H "Content-Type: text/plain" \
+  -d "2024/02/09 22:30:15 [ERROR] main.go:42: Failed to connect
+2024/02/09 22:30:16 [INFO] handler.go:28: Request processed"
+```
+
+### Auto-Detect Log Format (Recommended)
+```bash
+curl -X POST http://localhost:8000/api/ingest/auto \
+  -H "Content-Type: text/plain" \
+  -d "2024-02-09 22:30:15.123 ERROR [main] com.example.App - Error occurred
+java.lang.NullPointerException
+    at com.example.Service.process(Service.java:42)"
 ```
 
 ## 🛣️ Roadmap

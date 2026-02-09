@@ -3,7 +3,7 @@ use rocket::http::Status;
 use rocket::serde::json::Json;
 use rocket::State;
 use sea_orm::prelude::DateTimeWithTimeZone;
-use sea_orm::{ActiveModelTrait, ColumnTrait, EntityTrait, QueryOrder, Set};
+use sea_orm::{ActiveModelTrait, EntityTrait, QueryOrder, Set};
 
 use crate::entities::prelude::*;
 use crate::models::{AppInfo, CreateAppRequest};

@@ -26,6 +26,13 @@ sha2 = "0.10"
 hex = "0.4"
 walkdir = "2"
 globset = "0.4"
+regex = "1"
+lazy_static = "1.4"
 
 [build-dependencies]
 tantivy = "0.25.0"
+
+
+
+[profile.dev]
+debug = 0
