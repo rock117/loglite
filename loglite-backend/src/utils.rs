@@ -238,20 +238,23 @@ pub fn parse_go_log_line(line: &str) -> Option<LogEntry> {
     // Try JSON format first (zap, logrus JSON)
     if line.trim_start().starts_with('{') {
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
-            let level = json.get("level")
+            let level = json
+                .get("level")
                 .or_else(|| json.get("Level"))
                 .and_then(|v| v.as_str())
                 .unwrap_or("INFO")
                 .to_uppercase();
 
-            let message = json.get("msg")
+            let message = json
+                .get("msg")
                 .or_else(|| json.get("message"))
                 .or_else(|| json.get("Message"))
                 .and_then(|v| v.as_str())
                 .unwrap_or("")
                 .to_string();
 
-            let ts_value = json.get("ts")
+            let ts_value = json
+                .get("ts")
                 .or_else(|| json.get("time"))
                 .or_else(|| json.get("timestamp"));
 
@@ -285,7 +288,8 @@ pub fn parse_go_log_line(line: &str) -> Option<LogEntry> {
     // Try standard Go log format
     let caps = GO_LOG_RE.captures(line)?;
     let timestamp = parse_timestamp(caps.get(1)?.as_str())?;
-    let level = caps.get(2)
+    let level = caps
+        .get(2)
         .map(|m| m.as_str().to_string())
         .unwrap_or_else(|| "INFO".to_string());
     let caller = caps.get(3).map(|m| m.as_str().to_string());
@@ -331,7 +335,8 @@ pub fn merge_multiline_logs(lines: Vec<&str>, format: LogFormat) -> Vec<LogEntry
             if let Some(mut entry) = current_entry.take() {
                 if !stacktrace_lines.is_empty() {
                     entry.stacktrace = Some(stacktrace_lines.join("\n"));
-                    entry.fields["stacktrace"] = serde_json::Value::String(stacktrace_lines.join("\n"));
+                    entry.fields["stacktrace"] =
+                        serde_json::Value::String(stacktrace_lines.join("\n"));
                     stacktrace_lines.clear();
                 }
                 entries.push(entry);

@@ -28,6 +28,8 @@ walkdir = "2"
 globset = "0.4"
 regex = "1"
 lazy_static = "1.4"
+notify = "6.1"
+encoding_rs = "0.8"
 
 [build-dependencies]
 tantivy = "0.25.0"

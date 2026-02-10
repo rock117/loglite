@@ -40,7 +40,9 @@ impl Snowflake {
                     now_ms = Utc::now().timestamp_millis();
                     continue;
                 }
-                return ((now_ms & 0x1ffffffffff) << 22) | ((self.node_id & 0x03ff) << 12) | (seq as i64);
+                return ((now_ms & 0x1ffffffffff) << 22)
+                    | ((self.node_id & 0x03ff) << 12)
+                    | (seq as i64);
             }
 
             self.last_ms.store(now_ms, Ordering::SeqCst);

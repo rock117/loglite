@@ -200,10 +200,10 @@ pub async fn ingest_auto(
     body: String,
 ) -> Result<Json<IngestResponse>, Status> {
     let lines: Vec<&str> = body.lines().collect();
-    
+
     // Detect format from sample
     let format = detect_log_format(&lines);
-    
+
     if format == LogFormat::Unknown {
         return Err(Status::BadRequest);
     }

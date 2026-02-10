@@ -93,6 +93,56 @@ pub struct HealthResponse {
     pub status: &'static str,
 }
 
+/// Request payload for creating a log source.
+#[derive(Debug, Deserialize)]
+pub struct CreateSourceRequest {
+    pub app_id: String,
+    pub kind: String,
+    pub path: String,
+    #[serde(default)]
+    pub recursive: Option<bool>,
+    #[serde(default)]
+    pub encoding: Option<String>,
+    #[serde(default)]
+    pub include_glob: Option<String>,
+    #[serde(default)]
+    pub exclude_glob: Option<String>,
+    #[serde(default)]
+    pub enabled: Option<bool>,
+}
+
+/// Request payload for updating a log source.
+#[derive(Debug, Deserialize)]
+pub struct UpdateSourceRequest {
+    #[serde(default)]
+    pub path: Option<String>,
+    #[serde(default)]
+    pub recursive: Option<bool>,
+    #[serde(default)]
+    pub encoding: Option<String>,
+    #[serde(default)]
+    pub include_glob: Option<String>,
+    #[serde(default)]
+    pub exclude_glob: Option<String>,
+    #[serde(default)]
+    pub enabled: Option<bool>,
+}
+
+/// Source information for API responses.
+#[derive(Debug, Serialize)]
+pub struct SourceInfo {
+    pub id: i64,
+    pub app_id: String,
+    pub kind: String,
+    pub path: String,
+    pub recursive: bool,
+    pub encoding: String,
+    pub include_glob: Option<String>,
+    pub exclude_glob: Option<String>,
+    pub enabled: bool,
+    pub created_at: DateTimeWithTimeZone,
+}
+
 fn default_ts() -> DateTimeWithTimeZone {
     use chrono::{FixedOffset, Utc};
     let utc = Utc::now();

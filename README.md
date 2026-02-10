@@ -15,9 +15,10 @@ A lightweight, high-performance log ingestion and search system inspired by Splu
 - ✅ Basic ingestion and search APIs
 - ✅ **Multi-language log parsing (Java, Rust, Go) with auto-detection**
 - ✅ **Multi-line log merging (exception stack traces)**
-- 🚧 File/directory tail ingestion with offset persistence
+- ✅ **File/directory tail ingestion with offset persistence**
+- ✅ **Sources CRUD API (create, read, update, delete log sources)**
+- ✅ **Glob pattern filtering (include/exclude patterns, recursive scanning)**
 - 🚧 Frontend UI (Vue3)
-- ⏳ Per-app source configuration (include/exclude patterns, recursive scanning)
 - ⏳ Authentication and rate limiting
 
 ## 📖 Overview
@@ -58,6 +59,7 @@ Loglite provides a simplified alternative to enterprise log management systems, 
 │                    Backend (Rocket API)                      │
 ├─────────────────────────────────────────────────────────────┤
 │  • /api/apps          - App management                       │
+│  • /api/sources       - Log source CRUD                      │
 │  • /api/ingest        - Generic JSON ingestion               │
 │  • /api/ingest/java   - Java log parsing                     │
 │  • /api/ingest/rust   - Rust log parsing                     │

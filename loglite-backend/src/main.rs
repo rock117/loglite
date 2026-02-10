@@ -11,16 +11,19 @@ mod id_gen;
 mod models;
 mod search_engine;
 mod state;
+mod tail;
 mod utils;
 
 use db::init_db;
 use handlers::{
-    create_app, health_handler, ingest_auto, ingest_go, ingest_handler, ingest_java, ingest_nginx,
-    ingest_rust, list_apps, search_handler_fn, ttl_cleanup_loop,
+    create_app, create_source, delete_source, get_source, health_handler, ingest_auto, ingest_go,
+    ingest_handler, ingest_java, ingest_nginx, ingest_rust, list_apps, list_sources,
+    search_handler_fn, ttl_cleanup_loop, update_source,
 };
 use id_gen::Snowflake;
 use search_engine::init_search;
 use state::AppState;
+use tail::tail_ingestion_loop;
 
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
@@ -30,11 +33,10 @@ async fn main() -> Result<(), rocket::Error> {
 
     let db_url = std::env::var("LOGLITE_DB_URL")
         .unwrap_or_else(|_| "postgres://postgres:postgres@localhost/loglite".to_string());
-    let db = init_db(&db_url)
-        .await
-        .expect("failed to init database");
+    let db = init_db(&db_url).await.expect("failed to init database");
 
-    let index_dir = std::env::var("LOGLITE_INDEX_DIR").unwrap_or_else(|_| "loglite-index".to_string());
+    let index_dir =
+        std::env::var("LOGLITE_INDEX_DIR").unwrap_or_else(|_| "loglite-index".to_string());
     let search = init_search(&index_dir).expect("failed to init search index");
 
     let node_id: i64 = std::env::var("LOGLITE_NODE_ID")
@@ -50,6 +52,7 @@ async fn main() -> Result<(), rocket::Error> {
     };
 
     tokio::spawn(ttl_cleanup_loop(Arc::new(state.clone())));
+    tokio::spawn(tail_ingestion_loop(Arc::new(state.clone())));
 
     let cors = rocket_cors::CorsOptions::default()
         .to_cors()
@@ -63,6 +66,11 @@ async fn main() -> Result<(), rocket::Error> {
                 health_handler,
                 create_app,
                 list_apps,
+                create_source,
+                list_sources,
+                get_source,
+                update_source,
+                delete_source,
                 ingest_handler,
                 ingest_nginx,
                 ingest_java,

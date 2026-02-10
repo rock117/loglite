@@ -1,5 +1,5 @@
-pub mod apps;
 pub mod app_sources;
+pub mod apps;
 pub mod events;
 pub mod tail_offsets;
 

@@ -19,7 +19,8 @@ pub struct SearchState {
 pub fn init_search(index_dir: &str) -> Result<SearchState> {
     let mut schema_builder = SchemaBuilder::default();
     let field_app_id = schema_builder.add_text_field("app_id", STRING | STORED);
-    let field_event_id = schema_builder.add_i64_field("event_id", tantivy::schema::INDEXED | STORED);
+    let field_event_id =
+        schema_builder.add_i64_field("event_id", tantivy::schema::INDEXED | STORED);
     let field_ts_epoch_ms = schema_builder.add_i64_field("ts_epoch_ms", STORED);
     let field_host = schema_builder.add_text_field("host", TEXT | STORED);
     let field_source = schema_builder.add_text_field("source", TEXT | STORED);

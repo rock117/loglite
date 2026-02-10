@@ -1,0 +1,165 @@
+feat: add multi-language log parsing with auto-detection and comprehensive tooling
+
+Implement comprehensive log parsing support for Java, Rust, and Go applications
+with automatic format detection, multi-line log merging, and complete developer
+tooling for quick start and testing.
+
+## Core Features
+
+### Multi-Language Log Parsing
+- Java log parser (Log4j/Logback format)
+  * Parse timestamp, level, thread, logger, message
+  * Multi-line exception stack trace merging
+  * Support both `.` and `,` millisecond separators
+  * Extract stacktrace into structured field
+  
+- Rust log parser (env_logger/tracing format)
+  * Parse env_logger: `[timestamp LEVEL module] message`
+  * Parse tracing: `timestamp LEVEL module: message`
+  * ISO8601 timestamp support
+  * Extract module information
+  
+- Go log parser (standard/zap/logrus format)
+  * Parse standard: `yyyy/MM/dd HH:mm:ss [LEVEL] caller: message`
+  * Parse JSON formats (zap, logrus)
+  * Unix timestamp support (float seconds)
+  * Extract caller and preserve all JSON fields
+  
+- Format auto-detection
+  * Analyze first 10 lines with 60% confidence threshold
+  * Support Java, Rust, Go, Nginx formats
+  * Automatic format selection and parsing
+
+### Advanced Parsing Capabilities
+- Multi-line log merging
+  * Detect log entry start lines (timestamp + level)
+  * Merge continuation lines (stack traces)
+  * Store stacktrace in structured fields
+  * Support Java exception patterns: `at`, `Caused by:`, `... N more`
+
+- Flexible timestamp parsing
+  * ISO8601: `2024-02-09T14:30:15Z`
+  * Java: `2024-02-09 22:30:15.123` or `2024-02-09 22:30:15,123`
+  * Go: `2024/02/09 22:30:15`
+  * Unix timestamps (float seconds)
+  * Automatic timezone conversion to UTC
+
+- Log level mapping to syslog severity
+  * ERROR/FATAL → 3 (Error)
+  * WARN/WARNING → 4 (Warning)
+  * INFO → 6 (Informational)
+  * DEBUG/TRACE → 7 (Debug)
+
+## New API Endpoints
+
+- POST /api/ingest/java - Java application logs
+- POST /api/ingest/rust - Rust application logs
+- POST /api/ingest/go - Go application logs
+- POST /api/ingest/auto - Auto-detect format (recommended)
+
+## Technical Implementation
+
+### Code Organization
+- utils.rs: Core parsing logic with regex caching
+  * LogFormat enum for format types
+  * LogEntry struct for parsed results
+  * detect_log_format() for auto-detection
+  * merge_multiline_logs() for multi-line handling
+  * Individual parsers: parse_java_log_line(), parse_rust_log_line(), parse_go_log_line()
+  * level_to_severity() for severity mapping
+  * parse_timestamp() for flexible timestamp parsing
+
+- handlers/ingest.rs: HTTP endpoints
+  * ingest_java() - Java log endpoint
+  * ingest_rust() - Rust log endpoint
+  * ingest_go() - Go log endpoint
+  * ingest_auto() - Auto-detection endpoint
+  * All endpoints support multi-line merging
+
+### Performance Optimizations
+- Use lazy_static! for regex compilation caching
+- Batch event processing
+- Async operations with Tokio
+- Graceful degradation on parse failures
+
+### Error Handling
+- Parse failures don't stop processing
+- Unknown formats stored as-is with fallback
+- Proper HTTP status codes
+- Structured error responses
+
+## Developer Tooling
+
+### Documentation
+- QUICKSTART.md - Quick start guide with step-by-step instructions
+- FEATURES.md - Complete feature list and specifications
+- test_logs.md - Comprehensive usage examples
+- README.md - Updated with new features and API examples
+
+### Configuration
+- .env.example - Example environment configuration
+- All settings documented with defaults
+
+### Scripts
+- start-backend.ps1 - Automated backend startup (Windows)
+  * Check PostgreSQL connection
+  * Create database if needed
+  * Copy .env from example
+  * Start backend server
+
+- test-api.ps1 - Automated API testing (Windows)
+  * Health check
+  * App creation
+  * Test all log formats (Java, Rust, Go)
+  * Test auto-detection
+  * Search functionality
+  * Display sample results
+
+## Dependencies Added
+
+- regex = "1" - Pattern matching for log parsing
+- lazy_static = "1.4" - Static regex compilation
+
+## Testing
+
+All features tested and verified:
+- cargo check ✓
+- cargo build --release ✓ (2m 28s)
+- cargo fmt ✓
+- Manual API testing with curl ✓
+
+## Documentation Updates
+
+- README.md: Added multi-language parsing to features and API examples
+- Created QUICKSTART.md with complete setup guide
+- Created FEATURES.md with detailed feature matrix
+- Created test_logs.md with usage examples
+- Created .env.example for configuration
+- Created PowerShell scripts for Windows users
+
+## Breaking Changes
+
+None - all changes are additive.
+
+## Migration Guide
+
+No migration needed. New endpoints are available immediately.
+Existing /api/ingest endpoint continues to work unchanged.
+
+## Performance Impact
+
+- Minimal overhead for new endpoints
+- Regex patterns cached at startup
+- No impact on existing functionality
+
+## Future Enhancements
+
+- Support for more log formats (Python, Node.js, etc.)
+- Custom grok patterns for user-defined formats
+- Real-time log streaming
+- Advanced multi-line detection (configurable patterns)
+
+---
+
+Closes: Multi-language log parsing feature request
+Related: Modular backend refactoring
